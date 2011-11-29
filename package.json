@@ -1,0 +1,12 @@
+{
+  "name": "Francoise.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "version": "0.0.1",
+  "dependencies": {
+    "irc": ">= 0.3.3",
+    "request": ">= 2.2.5",
+    "sax": ">= 0.3.3"
+  }
+}

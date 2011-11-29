@@ -1,4 +1,4 @@
-//var startTime = Date.now();
+var startTime = Date.now();
 var irc = require('irc');
 
 // Configure the bot here
@@ -20,8 +20,7 @@ var client = new irc.Client('irc.freenode.net', 'Francoise', {
 client.addListener('message', function(nick, to, message) {
     //console.log(nick + ' => ' + to + ': ' + message);
     if(message == '.up') {
-        //client.say(to, 'Uptime: ' + (Date.now() - startTime) / 1000 / 60 / 60 + ' hours.');
-        client.say(to, 'Uptime: ' + process.uptime() / 60 / 60 + ' hours. | Memory: ' + process.memoryUsage().rss / 1024 / 1024 + ' MiB.');
+        client.say(to, 'Uptime: ' + (Date.now() - startTime) / 1000 / 60 / 60 + ' hours.');
     }
     /*else if(message == '.check') {
         CheckFeed();
@@ -84,4 +83,4 @@ var http = require('http');
 http.createServer(function(request, response) {
     response.writeHead(200, {'Content-Type': 'text/plain'});
     response.end('hello, world\n');
-}).listen(80);
+}).listen(8124);

@@ -1,7 +1,7 @@
 var startTime = Date.now();
 var irc = require('irc');
 var os = require('os');
-console.log(os.cpus);
+console.log(os.cpus());
 
 // Configure the bot
 var client = new irc.Client('irc.freenode.net', 'Francoise', {

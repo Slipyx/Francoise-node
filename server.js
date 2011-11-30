@@ -1,5 +1,6 @@
 var startTime = Date.now();
 var irc = require('irc');
+var os = require('os');
 console.log(os.cpus);
 
 // Configure the bot

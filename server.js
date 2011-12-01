@@ -19,12 +19,12 @@ var client = new irc.Client('irc.freenode.net', 'Francoise', {
 client.addListener('message', function(nick, to, message) {
     //console.log(nick + ' => ' + to + ': ' + message);
     if(message == '.stats') {
-        client.say(to, 'Uptime: ' + process.uptime() / 60 / 60 + ' hours. | Memory: ' +
+        client.say(to, 'Uptime: ' + require('./uptime.js').format(process.uptime()) + ' | Memory: ' +
             process.memoryUsage().rss / 1024 / 1024 + ' MiB.');
     }
     else if(message == '.os') {
         var os = require('os');
-        client.say(to, 'Uptime: ' + os.uptime() / 60 / 60 + ' hours. | Memory: ' +
+        client.say(to, 'Uptime: ' + require('./uptime.js').format(os.uptime()) + ' | Memory: ' +
             os.freemem() / 1024 / 1024 + ' MiB / ' + os.totalmem() / 1024 / 1024 +
             ' MiB.');
     }

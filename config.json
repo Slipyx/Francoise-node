@@ -1,0 +1,14 @@
+{
+  "nick": "Francoise",
+  "userName": "ed",
+  "realName": "Edward",
+  "server": "irc.freenode.net",
+  "port": 7000,
+  "secure": true,
+  "channels": [
+    "#callisto"
+  ],
+  "feeds": [
+    {"name": "Reddit", "url": "http://www.reddit.com/.rss", "c": "5", "t": 1800}
+  ]
+}

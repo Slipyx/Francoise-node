@@ -1,16 +1,17 @@
 var irc = require('irc');
+var config = JSON.parse(require('fs').readFileSync('./config.json', 'utf-8'));
 
 // Configure the bot
-var client = new irc.Client('irc.freenode.net', 'Francoise', {
-    userName: 'ed',
-    realName: 'Edward',
-    port: 7000,
+var client = new irc.Client(config.server, config.nick, {
+    userName: config.userName,
+    realName: config.realName,
+    port: config.port,
     debug: false,
     showErrors: true,
     autoRejoin: true,
     autoConnect: true,
-    channels: ['#callisto'],
-    secure: true,
+    channels: config.channels,
+    secure: config.secure,
     selfSigned: false,
     floodProtection: true,
     stripColors: false

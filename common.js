@@ -1,0 +1,1 @@
+var Common = {    config: JSON.parse(require('fs').readFileSync('./config.json', 'utf-8'))};module.exports = Common;

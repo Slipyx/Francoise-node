@@ -1,17 +1,18 @@
 var irc = require('irc');
-var config = JSON.parse(require('fs').readFileSync('./config.json', 'utf-8'));
+var Common = require('./common.js');
+var i = 0;
 
 // Configure the bot
-var client = new irc.Client(config.server, config.nick, {
-    userName: config.userName,
-    realName: config.realName,
-    port: config.port,
-    debug: false,
+var client = new irc.Client(Common.config.server, Common.config.nick, {
+    userName: Common.config.userName,
+    realName: Common.config.realName,
+    port: Common.config.port,
+    debug: true,
     showErrors: true,
     autoRejoin: true,
     autoConnect: true,
-    channels: config.channels,
-    secure: config.secure,
+    channels: Common.config.channels,
+    secure: Common.config.secure,
     selfSigned: false,
     floodProtection: true,
     stripColors: false
@@ -39,68 +40,13 @@ client.addListener('message', function (nick, to, message) {
     }*/
 });
 
-// RSS PARSING
-var feed = {name: 'XKCD', url: 'http://xkcd.com/rss.xml'};
-var rssxml = '';
-var parse;
-function checkFeed() {
-    'use strict';
-    var request = require('request');
-    request = request.defaults({jar: false});
-    request(feed.url, function (error, response, body) {
-        if (!error && response.statusCode === 200) {
-            rssxml = body;
-            parse();
-        }
-    });
-}
-function parse() {
-    'use strict';
-    var sax = require('sax'), strict = true,
-        parser = sax.parser(strict, {trim: true, normalize: true}),
-        inItem = false, inTitle = false, inDate = false,
-        i = -1, c = 0, ch = 0;
-    feed.items = [];
-    parser.ontext = function (t) {
-        if (inItem && parser.tag) {
-            if (parser.tag.name === 'title') {
-                feed.items[i].title = t;
-            } else if (parser.tag.name === 'link' || parser.tag.name === 'id') {
-                feed.items[i].link = t;
-            } else if (parser.tag.name === 'pubDate' || parser.tag.name === 'dc:date' || parser.tag.name === 'updated') {
-                feed.items[i].date = t;
-            }
-        }
-    };
-    parser.oncdata = function (t) {
-        if (inItem && inTitle) {
-            feed.items[i].title = t;
-        } else if (inItem && inDate) {
-            feed.items[i].date = t;
-        }
-    };
-    parser.onopentag = function (node) {
-        if (node.name === 'item' || node.name === 'entry') {
-            inItem = true; i += 1;
-            feed.items[i] = {};
-        } else if (node.name === 'title') {
-            inTitle = true;
-        } else if (node.name === 'pubDate' || node.name === 'dc:date') {
-            inDate = true;
-        }
-    };
-    parser.onclosetag = function (tag) {
-        if (tag === 'item' || tag === 'entry') { inItem = false; }
-        if (tag === 'title') { inTitle = false; }
-        if (tag === 'pubDate' || tag === 'dc:date') { inDate = false; }
-    };
-    parser.write(rssxml).close();
-    //console.log(feed.items);
-    for (c = 0; c < feed.items.length; c += 1) {
-        for (ch = 0; ch < client.opt.channels.length; ch += 1) {
-            client.say(client.opt.channels[ch], feed.name + ': ' + feed.items[c].title + ' <' + feed.items[c].link + '>');
-        }
-    }
+// Check all feeds on start to get newest date
+for (i = 0; i < Common.config.feeds.length; i += 1) {
+    Common.config.feeds[i].newestDate = 'Mon, 01 Jan 1970 00:00:00 UTC';
+    Common.config.feeds[i].firstTime = true;
+    var feedParser = require('./feedParser.js');
+    feedParser.checkFeed(client, i);
+    setInterval(feedParser.checkFeed, Common.config.feeds[i].t * 1000, client, i);
 }
 
 // Hello world web server

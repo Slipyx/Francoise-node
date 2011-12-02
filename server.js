@@ -7,7 +7,7 @@ var client = new irc.Client(Common.config.server, Common.config.nick, {
     userName: Common.config.userName,
     realName: Common.config.realName,
     port: Common.config.port,
-    debug: true,
+    debug: false,
     showErrors: true,
     autoRejoin: true,
     autoConnect: true,
@@ -35,9 +35,7 @@ client.addListener('message', function (nick, to, message) {
             ' | ares: ' + process.versions.ares +
             ' | ev: ' + process.versions.ev +
             ' | openssl: ' + process.versions.openssl);
-    } /*else if (message === '.check') {
-        checkFeed();
-    }*/
+    }
 });
 
 // Check all feeds on start to get newest date
@@ -46,7 +44,7 @@ for (i = 0; i < Common.config.feeds.length; i += 1) {
     Common.config.feeds[i].firstTime = true;
     var feedParser = require('./feedParser.js');
     feedParser.checkFeed(client, i);
-    setInterval(feedParser.checkFeed, Common.config.feeds[i].t * 1000, client, i);
+    //setInterval(feedParser.checkFeed, Common.config.feeds[i].t * 1000, client, i);
 }
 
 // Hello world web server

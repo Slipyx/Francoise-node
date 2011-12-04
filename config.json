@@ -9,7 +9,7 @@
     "#callisto"
   ],
   "feeds": [
-    {"name": "Reddit", "url": "http://www.reddit.com/.rss", "c": "5", "t": 600},
-    {"name": "CNN", "url": "http://rss.cnn.com/rss/cnn_topstories.rss", "c": "0,4", "t": 300}
+    {"name": "r/gaming", "url": "http://www.reddit.com/r/gaming/.rss", "c": "12", "t": 1800},
+    {"name": "r/gamedev", "url": "http://www.reddit.com/r/gamedev/.rss", "c": "11", "t": 1800}
   ]
 }

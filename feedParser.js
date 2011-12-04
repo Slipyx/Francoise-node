@@ -17,7 +17,7 @@ function parse(cl, f, body) {
     var sax = require('sax'), strict = true,
         parser = sax.parser(strict, {trim: true, normalize: true}),
         inItem = false, inTitle = false, inDate = false,
-        i = -1, c = 0, ch = 0;
+        i = -1, c = 0, ch = 0, newItems = [], n = 0;
     Common.config.feeds[f].items = [];
     parser.ontext = function (t) {
         if (inItem && parser.tag) {
@@ -53,16 +53,31 @@ function parse(cl, f, body) {
         if (tag === 'pubDate' || tag === 'dc:date') { inDate = false; }
     };
     parser.write(body).close();
+    // Done parsing feeds, now see if we have any new ones to post.
+    for (c = 0; c < Common.config.feeds[f].items.length; c += 1) {
+        // Convert dc:date to pubDate if needed
+        if (Common.config.feeds[f].items[c].date.substr(0, 1) === '2') {
+            Common.config.feeds[f].items[c].date =
+                require('./dateUtils.js').dcToPub(Common.config.feeds[f].items[c].date);
+        }
+        // If item date is newer than newest date, add to newItems list.
+        if (require('./dateUtils.js').dateIsNewer(Common.config.feeds[f].newestDate,
+                Common.config.feeds[f].items[c].date)) {
+            newItems[n] = Common.config.feeds[f].items[c]; n += 1;
+        }
+    } c = 0;
     //console.log(feed.items);
-    if (Common.config.feeds[f].firstTime) {
-        Common.config.feeds[f].firstTime = false;
-    } else {
-        for (c = 0; c < 1; c += 1) { //Common.config.feeds[f].items.length; c += 1) {
+    for (c = newItems.length - 1; c >= 0; c -= 1) {
+        if (!Common.config.feeds[f].firstTime) {
             for (ch = 0; ch < cl.opt.channels.length; ch += 1) {
-                cl.say(cl.opt.channels[ch], '' + Common.config.feeds[f].c + Common.config.feeds[f].name +
-                    ': ' + Common.config.feeds[f].items[c].title +
-                    ' <15' + Common.config.feeds[f].items[c].link + '>');
+                cl.say(cl.opt.channels[ch], '\u0003' + Common.config.feeds[f].c + Common.config.feeds[f].name +
+                    '\u000f: ' + newItems[c].title + ' <\u000315' + newItems[c].link + '\u000f>');
             }
         }
+        if (require('./dateUtils.js').dateIsNewer(Common.config.feeds[f].newestDate, newItems[c].date)) {
+            Common.config.feeds[f].newestDate = newItems[c].date;
+        }
     }
+    console.log(Common.config.feeds[f].name + ' newest date: ' + Common.config.feeds[f].newestDate);
+    Common.config.feeds[f].firstTime = false;
 }

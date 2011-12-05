@@ -1,5 +1,6 @@
 var irc = require('irc');
 var Common = require('./common.js');
+var os = require('os');
 var i = 0;
 
 // Configure the bot
@@ -20,23 +21,28 @@ var client = new irc.Client(Common.config.server, Common.config.nick, {
 
 client.addListener('message', function (nick, to, message) {
     'use strict';
-    //console.log(nick + ' => ' + to + ': ' + message);
-    if (to !== client.opt.nick) { // Don't receive pm's
+    if (to.match(/^[#&]/)) { // Don't receive pm's
         if (message === '.stats') {
             client.say(to, '\u00032Uptime\u000f: ' + require('./uptime.js').format(process.uptime()) +
                 ' | \u000302Memory\u000f: ' + process.memoryUsage().rss / 1024 / 1024 + ' MiB.');
         } else if (message === '.os') {
-            var os = require('os');
             client.say(to, '\u00032Uptime\u000f: ' + require('./uptime.js').format(os.uptime()) +
                 ' | \u00032Memory\u000f: ' + os.freemem() / 1024 / 1024 + ' MiB / ' +
-                os.totalmem() / 1024 / 1024 + ' MiB.');
+                os.totalmem() / 1024 / 1024 + ' MiB');
         } else if (message === '.version') {
             client.say(to, '\u00032Node.js\u000f: ' + process.versions.node +
                 ' | \u00032v8\u000f: ' + process.versions.v8 +
                 ' | \u00032ares\u000f: ' + process.versions.ares +
-                ' | \u00032ev\u000f: ' + process.versions.ev +
+                ' | \u00032uv\u000f: ' + process.versions.uv +
                 ' | \u00032openssl\u000f: ' + process.versions.openssl);
         }
+    } else if (message.match(/^\u0001PING\u0020.{1,}\u0001$/)) { // Reply to pings
+        console.log('PING request from ' + nick);
+        client.notice(nick, message);
+    } else if (message.match(/^\u0001VERSION\u0001$/)) { // Reply to versions
+        console.log('VERSION request from ' + nick);
+        client.notice(nick, '\u0001VERSION Node.js ' + process.version + ' | ' +
+            os.type() + ' ' + os.release() + '\u0001');
     }
 });
 
@@ -52,7 +58,6 @@ for (i = 0; i < Common.config.feeds.length; i += 1) {
 // Hello world web server
 require('http').createServer(function (request, response) {
     'use strict';
-    console.log('HTTP request from ' + request.headers.host);
     response.writeHead(200, {'Content-Type': 'text/plain'});
     response.write('hello, world');
     response.end();

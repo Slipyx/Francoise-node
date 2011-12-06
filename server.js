@@ -47,10 +47,10 @@ client.addListener('message', function (nick, to, message) {
         } else if (message.toLowerCase().match(/^.feedinfo\u0020.{1,}$/)) { // Get config info for specified feed name
             require('./feedCommands.js').feedInfo(client, to, message.substr(10));
         }
-    } else if (message.match(/^\u0001PING\u0020.{1,}\u0001$/)) { // Reply to pings
+    } else if (message.match(/^\u0001PING\u0020.{1,}\u0001$/)) { // Reply to CTCP PING's
         console.log('PING request from ' + nick);
         client.notice(nick, message);
-    } else if (message.match(/^\u0001VERSION\u0001$/)) { // Reply to versions
+    } else if (message.match(/^\u0001VERSION\u0001$/)) { // Reply to CTCP VERSION's
         console.log('VERSION request from ' + nick);
         client.notice(nick, '\u0001VERSION Node.js ' + process.version + ' | ' +
             os.type() + ' ' + os.release() + '\u0001');

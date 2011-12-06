@@ -1,9 +1,9 @@
 {
-  "name": "Francoise.js",
+  "name": "Francoise-node",
   "scripts": {
     "start": "node server.js"
   },
-  "version": "0.3.2",
+  "version": "0.3.3",
   "dependencies": {
     "irc": ">= 0.3.3",
     "request": ">= 2.2.5",

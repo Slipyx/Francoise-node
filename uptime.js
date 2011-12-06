@@ -1,3 +1,9 @@
+/*
+** Formats a time given in seconds to a more readable string resembling the
+** Linux 'uptime' utility.
+** Copyright (C) 2011 Josh Koch. See Copyright Notice in LICENSE.txt
+*/
+
 function hrmin(secs) {
     'use strict';
     var hr = Math.floor(secs / 60 / 60),

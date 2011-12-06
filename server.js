@@ -1,3 +1,9 @@
+/*
+** Starting module. Setup bot, add message listener, initialize RSS feeds, and
+** create HTTP server.
+** Copyright (C) 2011 Josh Koch. See Copyright Notice in LICENSE.txt
+*/
+
 var irc = require('irc');
 var Common = require('./common.js');
 var i = 0;
@@ -36,6 +42,10 @@ client.addListener('message', function (nick, to, message) {
                 ' | \u00032ares\u000f: ' + process.versions.ares +
                 ' | \u00032uv\u000f: ' + process.versions.uv +
                 ' | \u00032openssl\u000f: ' + process.versions.openssl);
+        } else if (message.toLowerCase() === '.listfeeds') { // List all feed names
+            require('./feedCommands.js').listFeeds(client, to);
+        } else if (message.toLowerCase().match(/^.feedinfo\u0020.{1,}$/)) { // Get config info for specified feed name
+            require('./feedCommands.js').feedInfo(client, to, message.substr(10));
         }
     } else if (message.match(/^\u0001PING\u0020.{1,}\u0001$/)) { // Reply to pings
         console.log('PING request from ' + nick);

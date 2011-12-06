@@ -1,4 +1,8 @@
-// RSS PARSING
+/*
+** RSS Parsing.
+** Copyright (C) 2011 Josh Koch. See Copyright Notice in LICENSE.txt
+*/
+
 var Common = require('./common.js');
 var parse;
 exports.checkFeed = function (cl, f) {

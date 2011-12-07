@@ -30,4 +30,4 @@ exports.feedInfo = function (cl, to, feedName) {
             foundFeed.url + ' | \u00032Color\u000f: ' + foundFeed.c + ' | \u00032Interval\u000f: ' +
             foundFeed.t);
     }
-}
+};

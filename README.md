@@ -9,7 +9,10 @@ Released under the MIT license. See LICENSE.txt for full information.
 
 ## Usage
 First, edit config.json with your desired settings. Then launch the bot by
-running server.js with your Node executable.
+running server.js with your Node executable. You can specify a different config
+file by using the --config command line argument. For example: `node server.js
+--config config/myconfig` will use the file `./config/myconfig.json` for its
+configuration.
 
 #### Commands
 .os - Get information about the OS the bot is running on.  

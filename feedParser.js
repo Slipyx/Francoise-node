@@ -27,7 +27,7 @@ function parse(cl, f, body) {
         if (inItem && parser.tag) {
             if (parser.tag.name === 'title') {
                 Common.config.feeds[f].items[i].title = t;
-            } else if (parser.tag.name === 'link' || parser.tag.name === 'id') {
+            } else if (parser.tag.name === 'link') {
                 Common.config.feeds[f].items[i].link = t;
             } else if (parser.tag.name === 'pubDate' || parser.tag.name === 'dc:date' || parser.tag.name === 'updated') {
                 Common.config.feeds[f].items[i].date = t;
@@ -49,6 +49,8 @@ function parse(cl, f, body) {
             inTitle = true;
         } else if (node.name === 'pubDate' || node.name === 'dc:date') {
             inDate = true;
+        } else if (inItem && node.name === 'link') {
+            Common.config.feeds[f].items[i].link = node.attributes.href;
         }
     };
     parser.onclosetag = function (tag) {

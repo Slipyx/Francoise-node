@@ -3,6 +3,8 @@
 
 ## Introduction
 Francoise-node is a RSS feed reader IRC bot for [Node.js](http://nodejs.org/).
+Initially created as a port of my Lua RSS feed reader IRC bot
+[Francoise](https://github.com/Slipyx/Francoise).
 
 ## License
 Released under the MIT license. See LICENSE.txt for full information.

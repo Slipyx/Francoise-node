@@ -28,15 +28,15 @@ client.addListener('message', function (nick, to, message) {
     'use strict';
     var os = require('os');
     if (to.match(/^[#&]/)) { // Don't receive pm's
-        if (message === '.stats') {
+        if (message === '.stats') { // Get process stats
             client.say(to, '\u00032Uptime\u000f: ' + require('./uptime.js').format(process.uptime()) +
                 ' | \u000302Memory\u000f: ' + process.memoryUsage().rss / 1024 / 1024 + ' MiB.');
-        } else if (message === '.os') {
+        } else if (message === '.os') { // Get OS stats
             client.say(to, '\u00032OS\u000f: ' + os.type() + ' ' + os.release() +
                 ' | \u00032Uptime\u000f: ' + require('./uptime.js').format(os.uptime()) +
                 ' | \u00032Memory\u000f: ' + os.freemem() / 1024 / 1024 + ' MiB / ' +
                 os.totalmem() / 1024 / 1024 + ' MiB');
-        } else if (message === '.version') {
+        } else if (message === '.version') { // Get Node versions
             client.say(to, '\u00032Node.js\u000f: ' + process.versions.node +
                 ' | \u00032v8\u000f: ' + process.versions.v8 +
                 ' | \u00032ares\u000f: ' + process.versions.ares +

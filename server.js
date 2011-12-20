@@ -44,10 +44,10 @@ client.addListener('message', function (nick, to, message) {
                 ' | \u00032openssl\u000f: ' + process.versions.openssl);
         } else if (message.toLowerCase() === '.listfeeds') { // List all feed names
             require('./feedCommands.js').listFeeds(client, to);
-        } else if (message.toLowerCase().match(/^\.feedinfo\u0020\w{1,}$/)) { // Get config info for specified feed name
+        } else if (message.toLowerCase().match(/^\.feedinfo\u0020.+$/)) { // Get config info for specified feed name
             require('./feedCommands.js').feedInfo(client, to, message.substr(10));
         }
-    } else if (message.match(/^\u0001PING\u0020\w{1,}\u0001$/)) { // Reply to CTCP PING's
+    } else if (message.match(/^\u0001PING\u0020.+\u0001$/)) { // Reply to CTCP PING's
         console.log('PING request from ' + nick);
         client.notice(nick, message);
     } else if (message.match(/^\u0001VERSION\u0001$/)) { // Reply to CTCP VERSION's

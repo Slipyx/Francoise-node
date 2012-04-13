@@ -1,7 +1,7 @@
 /*
 ** Formats a time given in seconds to a more readable string resembling the
 ** Linux 'uptime' utility.
-** Copyright (C) 2011 Josh Koch. See Copyright Notice in LICENSE.txt
+** Copyright (C) 2011-2012 Josh Koch. See Copyright Notice in LICENSE.txt
 */
 
 function hrmin(secs) {

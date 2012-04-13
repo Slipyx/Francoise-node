@@ -1,13 +1,14 @@
 /*
 ** RSS Parsing.
-** Copyright (C) 2011 Josh Koch. See Copyright Notice in LICENSE.txt
+** Copyright (C) 2011-2012 Josh Koch. See Copyright Notice in LICENSE.txt
 */
 
 var Common = require('./common.js');
+var util = require('util');
 var parse;
 exports.checkFeed = function (cl, f) {
     'use strict';
-    console.log('Checking (' + f + ') ' + Common.config.feeds[f].name + '...');
+    util.log('Checking (' + f + ') ' + Common.config.feeds[f].name + '...');
     var request = require('request');
     request = request.defaults({jar: false});
     request(Common.config.feeds[f].url, function (error, response, body) {
@@ -84,6 +85,6 @@ function parse(cl, f, body) {
             Common.config.feeds[f].newestDate = newItems[c].date;
         }
     }
-    console.log(Common.config.feeds[f].name + ' newest date: ' + Common.config.feeds[f].newestDate);
+    util.log(Common.config.feeds[f].name + ' newest date: ' + Common.config.feeds[f].newestDate);
     Common.config.feeds[f].firstTime = false;
 }

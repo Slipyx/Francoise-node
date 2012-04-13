@@ -1,6 +1,6 @@
 /*
 ** Utilites for dealing with dates from RSS feeds.
-** Copyright (C) 2011 Josh Koch. See Copyright Notice in LICENSE.txt
+** Copyright (C) 2011-2012 Josh Koch. See Copyright Notice in LICENSE.txt
 */
 
 var monthNums = {Jan: 1, Feb: 2, Mar: 3, Apr: 4, May: 5, Jun: 6, Jul: 7, Aug: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12},

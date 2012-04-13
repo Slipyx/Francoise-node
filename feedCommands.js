@@ -1,6 +1,6 @@
 /*
 ** Commands for getting and setting feed info.
-** Copyright (C) 2011 Josh Koch. See Copyright Notice in LICENSE.txt
+** Copyright (C) 2011-2012 Josh Koch. See Copyright Notice in LICENSE.txt
 */
 
 var Common = require('./common.js');

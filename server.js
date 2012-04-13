@@ -1,7 +1,7 @@
 /*
 ** Starting module. Setup bot, add message listener, initialize RSS feeds, and
 ** create HTTP server.
-** Copyright (C) 2011 Josh Koch. See Copyright Notice in LICENSE.txt
+** Copyright (C) 2011-2012 Josh Koch. See Copyright Notice in LICENSE.txt
 */
 
 var irc = require('irc');

@@ -28,6 +28,6 @@ exports.feedInfo = function (cl, to, feedName) {
     } else {
         cl.say(to, '\u00032Name\u000f: \u0003' + foundFeed.c + foundFeed.name + '\u000f | \u00032URL\u000f: ' +
             foundFeed.url + ' | \u00032Color\u000f: ' + foundFeed.c + ' | \u00032Interval\u000f: ' +
-            foundFeed.t);
+            foundFeed.t + ' | \u00032Newest Date\u000f: ' + foundFeed.newestDate );
     }
 };

@@ -29,6 +29,10 @@ function parse(cl, f, body) {
             if (parser.tag.name === 'title') {
                 Common.config.feeds[f].items[i].title = t;
             } else if (parser.tag.name === 'link') {
+                // Trim link if it's from Reddit
+                if (t.match(/reddit\.com\//) && t.match(/\/comments\//)) {
+                    t = t.replace(/\/[^\/]+\/$/, '/');
+                }
                 Common.config.feeds[f].items[i].link = t;
             } else if (parser.tag.name === 'pubDate' || parser.tag.name === 'dc:date' || parser.tag.name === 'updated') {
                 Common.config.feeds[f].items[i].date = t;

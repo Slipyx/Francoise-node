@@ -8,7 +8,7 @@ var util = require('util');
 var parse;
 exports.checkFeed = function (cl, f) {
     'use strict';
-    util.log('Checking (' + f + ') ' + Common.config.feeds[f].name + '...');
+    //util.log('Checking (' + f + ') ' + Common.config.feeds[f].name + '...');
     var request = require('request');
     request = request.defaults({jar: false});
     request(Common.config.feeds[f].url, function (error, response, body) {
@@ -89,6 +89,6 @@ function parse(cl, f, body) {
             Common.config.feeds[f].newestDate = newItems[c].date;
         }
     }
-    util.log(Common.config.feeds[f].name + ' newest date: ' + Common.config.feeds[f].newestDate);
+    //util.log(Common.config.feeds[f].name + ' newest date: ' + Common.config.feeds[f].newestDate);
     Common.config.feeds[f].firstTime = false;
 }
